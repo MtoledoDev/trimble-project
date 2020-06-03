@@ -17,6 +17,9 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<kotlin.version>1.3.72</kotlin.version>
+		<url.db>jdbc:postgresql://localhost:5432/trimblemovie</url.db>
+		<user.db>trimbleemploye</user.db>
+		<password.db>trimbleehl33t</password.db>
 	</properties>
 
 	<dependencies>
@@ -95,6 +98,17 @@
 						<version>${kotlin.version}</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>6.4.1</version>
+				<configuration>
+					<url>${url.db}</url>
+					<user>${user.db}</user>
+					<password>${password.db}</password>
+					<baselineOnMigrate>true</baselineOnMigrate>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
