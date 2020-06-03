@@ -1,0 +1,29 @@
+GET http://localhost:8080/movies
+####
+GET http://localhost:8080/movies/10
+####
+POST http://localhost:8080/movies
+Content-Type: application/json
+
+{
+    "id": "3",
+    "title": "fantastica fabrica de chocolate",
+    "release_date": "2020-06-03 14:05:22",
+    "synopsis": "um filme fantastico",
+    "usr_rating": "10"
+}
+
+#####
+PUT http://localhost:8080/movies/1
+Content-Type: application/json
+
+{
+  "id": "3",
+  "title": "fantastica fabrica de chocolate",
+  "release_date": "2020-06-03 14:05:22",
+  "synopsis": "um filme fantastico",
+  "usr_rating": "@"
+}
+
+####
+GET /movies/letter_metrics_top10
