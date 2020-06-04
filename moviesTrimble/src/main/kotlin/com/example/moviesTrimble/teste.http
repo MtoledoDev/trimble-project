@@ -26,4 +26,4 @@ Content-Type: application/json
 }
 
 ####
-GET /movies/letter_metrics_top10
+GET http://localhost:8080/movies/letter_metrics_top10

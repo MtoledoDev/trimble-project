@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired
 
 import com.example.moviesTrimble.repo.MoviesRepository
 import com.example.moviesTrimble.model.Movies
-import org.aspectj.weaver.patterns.ThrowsPattern
-import org.springframework.http.RequestEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
-import javax.xml.ws.Response
 import kotlin.RuntimeException
 
 class TestException(message:String): Exception(message)
@@ -18,18 +15,6 @@ class MoviesController {
 
     @Autowired
     lateinit var repository: MoviesRepository
-
-//    @RequestMapping("/movies")
-//    fun save(): String {
-//        repository.save(Customer("Jack", "Smith"))
-//        repository.save(Customer("Adam", "Johnson"))
-//        repository.save(Customer("Kim", "Smith"))
-//        repository.save(Customer("David", "Williams"))
-//        repository.save(Customer("Peter", "Davis"))
-//
-//        return "Done"
-//    }
-
 
     @GetMapping("/movies")
     fun findAll(): Iterable<Movies> = repository.findAll()
@@ -57,13 +42,10 @@ class MoviesController {
     }
 
     @GetMapping("/movies/letter_metrics_top10")
-    fun findTitles(): Iterable<Movies>
-//    @RequestMapping("/findbyid/{id}")
-//    fun findById(@PathVariable id: Int)
-//            = repository.findById(id)
-//
-//    @RequestMapping("findbylastname/{lastName}")
-//    fun findByLastName(@PathVariable lastName: String)
-//            = repository.findById(lastName)
+    fun test(){
+        val testes = repository.findAll()
+        testes.forEach
+
+    }
 
 }
