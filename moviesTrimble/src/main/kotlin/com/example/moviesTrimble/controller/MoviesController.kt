@@ -55,19 +55,22 @@ class MoviesController {
         var count: Int = 0
         var C: Char = 'A'
         var list: MutableList<Pair<Char, Int>> = ArrayList()
+        var finalList: MutableList<Pair<Char, Int>> = ArrayList()
         while (C <= 'Z') {
             movies.map { titulo ->
                 if(titulo.contains("$C", ignoreCase = true)) {
                 ++count
                 }
             }
-            //list.add("letra $C: quantidade:  $count" )
-            list.add(Pair(first = C,second = count))
+            list.add(Pair(first = C, second = count))
             count = 0
             ++C
         }
         list.sortByDescending { it.second }
-        return list
+        for (count in 0 until 10) {
+            finalList.add(list.elementAt(count))
+        }
+        return finalList
     }
 
 
