@@ -10,7 +10,7 @@ import javax.persistence.*
 data class Movies(
 
        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-       val id: Int = 0,
+       val id: Int,
        val title: String = "",
        val release_date: String = "",
        val synopsis: String,

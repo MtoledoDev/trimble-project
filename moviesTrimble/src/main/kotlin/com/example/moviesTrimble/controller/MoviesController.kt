@@ -25,7 +25,15 @@ class MoviesController {
     fun findByID(@PathVariable id: Int): Optional<Movies> = repository.findById(id)
 
     @PostMapping("/movies")
-    fun create(@RequestBody movie: Movies) = ResponseEntity.ok(repository.save(movie))
+    fun create(@RequestBody movie: Movies): ResponseEntity<String> {
+        if (movie.title.length <= 30 ) {
+            repository.save(movie)
+            return ResponseEntity.ok("Saved!")
+        } else {
+            return ResponseEntity.badRequest().body("Title must have a maximum of 30 characters")
+        }
+    }
+    //ResponseEntity.ok(repository.save(movie))
 
     @PutMapping("/movies/{id}")
     fun update(@PathVariable id: Int, @RequestBody movie: Movies): ResponseEntity<String> {
@@ -65,8 +73,8 @@ class MoviesController {
         }
         list.sortByDescending { it.second }
 
-        for (count in 0 until 10) {
-            finalList.add(Letters(list.elementAt(count).first.toString(), list.elementAt(count).second.toString()))
+        for (x in 0 until 10) {
+            finalList.add(Letters(list.elementAt(x).first.toString(), list.elementAt(x).second.toString()))
         }
         return finalList
     }

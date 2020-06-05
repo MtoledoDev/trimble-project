@@ -18,7 +18,7 @@
 		<java.version>1.8</java.version>
 		<kotlin.version>1.3.72</kotlin.version>
 		<url.db>jdbc:postgresql://localhost:5432/trimblemovie</url.db>
-		<user.db>trimbleemploye</user.db>
+		<user.db>trimbleemployer</user.db>
 		<password.db>trimbleehl33t</password.db>
 	</properties>
 
