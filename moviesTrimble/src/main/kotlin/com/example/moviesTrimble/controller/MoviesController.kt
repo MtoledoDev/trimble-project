@@ -7,7 +7,6 @@ import com.example.moviesTrimble.model.Movies
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.RuntimeException
 import kotlin.collections.ArrayList
