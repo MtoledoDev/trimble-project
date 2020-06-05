@@ -7,6 +7,8 @@ import com.example.moviesTrimble.model.Movies
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import kotlin.RuntimeException
 import kotlin.collections.ArrayList
 
@@ -14,6 +16,8 @@ import kotlin.collections.ArrayList
 class TestException(message:String): Exception(message)
 @RestController
 class MoviesController {
+
+    val p: Pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE)
 
     @Autowired
     lateinit var repository: MoviesRepository
@@ -26,11 +30,16 @@ class MoviesController {
 
     @PostMapping("/movies")
     fun create(@RequestBody movie: Movies): ResponseEntity<String> {
-        if (movie.title.length <= 30 ) {
-            repository.save(movie)
-            return ResponseEntity.ok("Saved!")
+
+        return if (movie.title.length > 30) {
+            ResponseEntity.badRequest().body("Title must have a maximum of 30 characters")
+        } else if (movie.usr_rating.toInt() > 10 || movie.usr_rating.toInt() < 0) {
+            ResponseEntity.badRequest().body("usr_rating must be between 0 and 10")
+        } else if (p.matcher(movie.title.toString()).find()) {
+            ResponseEntity.badRequest().body("Special characters are not allowed")
         } else {
-            return ResponseEntity.badRequest().body("Title must have a maximum of 30 characters")
+            repository.save(movie)
+            ResponseEntity.ok("Saved!")
         }
     }
     //ResponseEntity.ok(repository.save(movie))
@@ -38,16 +47,13 @@ class MoviesController {
     @PutMapping("/movies/{id}")
     fun update(@PathVariable id: Int, @RequestBody movie: Movies): ResponseEntity<String> {
 
-        try {
-            val movieDB = repository.findById(id)
-            val updateQuery = movieDB.orElseThrow { RuntimeException("Movie Id not found: $id") }
-            if (movie.usr_rating.toInt() > 10 || movie.usr_rating.toInt() < 0) {
-                return ResponseEntity.badRequest().body("usr_rating must be between 0 and 10")
-            }
+        val movieDB = repository.findById(id)
+        val updateQuery = movieDB.orElseThrow { RuntimeException("Movie Id not found: $id") }
+        return if (movie.usr_rating.toInt() > 10 || movie.usr_rating.toInt() < 0) {
+            ResponseEntity.badRequest().body("usr_rating must be between 0 and 10")
+        } else {
             repository.save(updateQuery.copy(usr_rating = movie.usr_rating))
-            return ResponseEntity.ok("Updated!")
-        } catch (e: Exception) {
-            return ResponseEntity.badRequest().body("Error: $e")
+            ResponseEntity.ok("Updated!")
         }
     }
 
@@ -72,7 +78,6 @@ class MoviesController {
             ++C
         }
         list.sortByDescending { it.second }
-
         for (x in 0 until 10) {
             finalList.add(Letters(list.elementAt(x).first.toString(), list.elementAt(x).second.toString()))
         }

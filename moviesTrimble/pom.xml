@@ -107,6 +107,9 @@
 					<url>${url.db}</url>
 					<user>${user.db}</user>
 					<password>${password.db}</password>
+					<schemas>
+						<schema>public</schema>
+					</schemas>
 					<baselineOnMigrate>true</baselineOnMigrate>
 				</configuration>
 			</plugin>

@@ -11,8 +11,8 @@ data class Movies(
 
        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
        val id: Int,
-       val title: String = "",
-       val release_date: String = "",
+       val title: String,
+       val release_date: String,
        val synopsis: String,
        val usr_rating: Int
 )
