@@ -16,3 +16,5 @@ data class Movies(
        val synopsis: String,
        val usr_rating: Int
 )
+
+class Letters(var letra: String, var quantidade: String)

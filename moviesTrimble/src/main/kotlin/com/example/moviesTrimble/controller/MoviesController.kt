@@ -1,14 +1,12 @@
 package com.example.moviesTrimble.controller
 
+import com.example.moviesTrimble.model.Letters
 import org.springframework.beans.factory.annotation.Autowired
 import com.example.moviesTrimble.repo.MoviesRepository
 import com.example.moviesTrimble.model.Movies
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
-import javax.persistence.EntityManager
-import javax.persistence.EntityManagerFactory
-import javax.persistence.Query
 import kotlin.RuntimeException
 import kotlin.collections.ArrayList
 
@@ -46,16 +44,15 @@ class MoviesController {
     }
 
     @GetMapping("/movies/letter_metrics_top10")
-    fun getAllMovies(): List<Pair<Char, Int>> {
+    fun getAllMovies(): List<Letters> {
         val movies: MutableList<String> = ArrayList()
         repository.findAll().map { movie ->
             movies.add(movie.title)
         }
-        val movie: MutableList<String> = ArrayList()
         var count: Int = 0
         var C: Char = 'A'
         var list: MutableList<Pair<Char, Int>> = ArrayList()
-        var finalList: MutableList<Pair<Char, Int>> = ArrayList()
+        var finalList: MutableList<Letters> = ArrayList()
         while (C <= 'Z') {
             movies.map { titulo ->
                 if(titulo.contains("$C", ignoreCase = true)) {
@@ -67,8 +64,9 @@ class MoviesController {
             ++C
         }
         list.sortByDescending { it.second }
+
         for (count in 0 until 10) {
-            finalList.add(list.elementAt(count))
+            finalList.add(Letters(list.elementAt(count).first.toString(), list.elementAt(count).second.toString()))
         }
         return finalList
     }
