@@ -1,13 +1,17 @@
 package com.example.moviesTrimble.controller
 
 import org.springframework.beans.factory.annotation.Autowired
-
 import com.example.moviesTrimble.repo.MoviesRepository
 import com.example.moviesTrimble.model.Movies
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
+import javax.persistence.EntityManager
+import javax.persistence.EntityManagerFactory
+import javax.persistence.Query
 import kotlin.RuntimeException
+import kotlin.collections.ArrayList
+
 
 class TestException(message:String): Exception(message)
 @RestController
@@ -42,10 +46,30 @@ class MoviesController {
     }
 
     @GetMapping("/movies/letter_metrics_top10")
-    fun test(){
-        val testes = repository.findAll()
-        testes.forEach
-
+    fun getAllMovies(): List<Pair<Char, Int>> {
+        val movies: MutableList<String> = ArrayList()
+        repository.findAll().map { movie ->
+            movies.add(movie.title)
+        }
+        val movie: MutableList<String> = ArrayList()
+        var count: Int = 0
+        var C: Char = 'A'
+        var list: MutableList<Pair<Char, Int>> = ArrayList()
+        while (C <= 'Z') {
+            movies.map { titulo ->
+                if(titulo.contains("$C", ignoreCase = true)) {
+                ++count
+                }
+            }
+            //list.add("letra $C: quantidade:  $count" )
+            list.add(Pair(first = C,second = count))
+            count = 0
+            ++C
+        }
+        list.sortByDescending { it.second }
+        return list
     }
+
+
 
 }

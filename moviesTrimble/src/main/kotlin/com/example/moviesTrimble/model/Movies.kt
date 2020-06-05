@@ -1,16 +1,18 @@
 package com.example.moviesTrimble.model
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
 
 
+
+import javax.persistence.*
+
+
+@Entity
 data class Movies(
 
-       val title: String,
-       @Id @GeneratedValue
-       val id: Int,
-       val release_date: String,
+       @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+       val id: Int = 0,
+       val title: String = "",
+       val release_date: String = "",
        val synopsis: String,
        val usr_rating: Int
 )
