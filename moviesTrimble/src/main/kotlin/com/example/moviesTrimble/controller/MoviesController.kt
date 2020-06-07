@@ -12,7 +12,6 @@ import kotlin.RuntimeException
 import kotlin.collections.ArrayList
 
 
-class TestException(message:String): Exception(message)
 @RestController
 class MoviesController {
 
